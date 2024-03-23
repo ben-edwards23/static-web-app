@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: bacongobbler/azure-blob-storage-upload@main
         with:
-          source_dir: /
+          source_dir: _dist
           container_name: $web
           connection_string: ${{ secrets.ConnectionString }}
           # WARNING: this will overwrite existing blobs in your blob storage
