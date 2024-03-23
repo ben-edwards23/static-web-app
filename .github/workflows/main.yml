@@ -1,17 +1,30 @@
-name: Upload To Azure Blob Storage
+name: Blob Storage Website CI
+
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches: [ main ]
+    
 jobs:
-  upload:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: bacongobbler/azure-blob-storage-upload@main
-        with:
-          source_dir: _dist
-          container_name: $web
-          connection_string: ${{ secrets.ConnectionString }}
-          # WARNING: this will overwrite existing blobs in your blob storage
-          overwrite: 'true'
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name staticwebgklqjb4ehqpfk --auth-mode key -d '$web' -s .
+    - name: Purge CDN endpoint
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+           az cdn endpoint purge --content-paths  "/*" --profile-name "azurecdn-profile" --name "static-web-app" --resource-group "static-website-rg"
+      # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
