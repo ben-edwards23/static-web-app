@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto'
+}
+
+h1 {
+    text-align: center;
+}
+.img {
+    height: auto;
+    max-width: 50%;
+    display: block;
+    margin: 0 auto;
+    /* padding-left: 5rem; */
+}
+.current-job-title {
+    text-align: center;
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+.work-experience-section {
+    margin: 20px 10px;
+}
+
+.work-experience h3 {
+    margin: 20px 0px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 1rem;
+    
+}
+
+.item {
+    justify-items: center;
+    align-items: center;
+}
